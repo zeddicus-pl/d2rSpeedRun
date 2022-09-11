@@ -3,7 +3,7 @@ Eventually, a non-streamer may find it useful if run on a separate monitor, beca
 
 ## Download
 
-
+[Windows 64-bit installer](https://github.com/zeddicus-pl/d2rSpeedRun/releases/latest/download/d2rspeedruntool-setup.exe)
 
 ## How it works
 
