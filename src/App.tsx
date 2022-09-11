@@ -5,10 +5,11 @@ import { Main } from './components/Main'
 import { useState, useEffect, MouseEventHandler } from 'react';
 import { ThemeProvider } from '@mui/system';
 import { createTheme } from '@mui/material';
-import { ToastContainer } from 'material-react-toastify';
+import { toast, ToastContainer } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
 import { FileReaderResponse, Settings } from './@types/main.d';
 import defaultSettings from './utils/defaultSettings';
+import i18n from './i18n';
 
 /* eslint-disable no-unused-vars */
 export enum UiState {
@@ -24,16 +25,21 @@ export function App() {
   const [uiState, setUiState] = useState(UiState.Loading);
   const [appSettings, setAppSettings] = useState<Settings>(defaultSettings);
   const [localPort, setLocalPort] = useState(0);
+  const [receivedSettings, setReceivedSettings] = useState(false);
 
   const updateSettings = (settings: Settings) => {
     // @ts-ignore
     if (!settings.saveDir) {
       settings.saveDir = '';
     }
-    if (!settings.public) {
-      settings.public = false;
+    if (!settings.lang) {
+      settings.lang = 'en';
     }
+    i18n.changeLanguage(settings.lang);
     setAppSettings(settings);
+    if (!receivedSettings) {
+      setReceivedSettings(true);
+    }
   }
 
   const readData = (settings: Settings) => {
@@ -78,6 +84,10 @@ export function App() {
       }, 500);
     });
 
+    window.Main.on('error', (errorMsg: string) => {
+      toast.error(errorMsg);
+    });
+
     const settings = window.Main.getSettings();
     updateSettings(settings);
     readData(settings);
@@ -91,6 +101,10 @@ export function App() {
     // @ts-ignore
     document.addEventListener('auxclick', auxclickHandler, false);
   }, [])
+
+  if (!receivedSettings) {
+    return null;
+  }
 
   return (
     <>

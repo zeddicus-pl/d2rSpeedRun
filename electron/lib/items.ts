@@ -13,7 +13,7 @@ import { updateDataToListeners } from './stream';
 const { readFile } = promises;
 
 class ItemsStore {
-  currentData: FileReaderResponse;
+  currentData: FileReaderResponse | null;
   fileWatcher: FSWatcher | null;
   watchPath: string | null;
   filesChanged: boolean;
@@ -63,7 +63,9 @@ class ItemsStore {
         event.reply('openFolderWorking', null);
         this.parseSaves(event, path, true);
       } else {
+        this.currentData = null;
         event.reply('openFolder', null);
+        updateDataToListeners();
       }
     }).catch((e) => {
       console.log(e);
@@ -130,6 +132,7 @@ class ItemsStore {
         })
         .catch((e) => {
           console.log("ERROR", e);
+          event.reply('error', (e as Error).message);
           return null;
         })
       if (result) {

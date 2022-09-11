@@ -25,5 +25,4 @@ export type FileReaderResponse = {
 export type Settings = {
   saveDir: string,
   lang: string,
-  public: boolean,
 }

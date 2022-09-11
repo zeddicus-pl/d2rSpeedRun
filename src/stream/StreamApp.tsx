@@ -6,6 +6,8 @@ import { Grid, createTheme } from '@mui/material';
 import { ThemeProvider } from '@mui/system';
 import { GlobalStyle } from '../styles/GlobalStyle';
 import prettyMs from 'pretty-ms';
+import { StatLabel, StatLine, StatValue } from './styles';
+import { useTranslation } from 'react-i18next';
 
 export default function StreamApp() {
   const [data, setData] = useState<FileReaderResponse | null>(null);
@@ -14,11 +16,12 @@ export default function StreamApp() {
     delay: 1000,
     callback: () => { setLastUpdate(lastUpdate + 1);}
   });
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const socket = io();
     socket.on("updatedSettings", function (settings: Settings) {
-      //
+      i18n.changeLanguage(settings.lang);
     });
     socket.on("openFolder", function (data: FileReaderResponse) {
       setData(data);
@@ -70,114 +73,124 @@ export default function StreamApp() {
     <GlobalStyle />
     <ThemeProvider theme={createTheme({palette: { mode: 'dark' }})}>
       <div id="stream">
-        <div id="stats">
+        <div id="stats" style={{ width: '100%' }}>
           <Grid container>
             <Grid item xs={4}>
-              <Grid container>
-                <Grid item xs={4} sx={{ textAlign: 'left', color: '#ffbd6a' }}>
+              <StatLine>
+                <StatLabel style={{  color: '#ffbd6a' }}>
                   Gold:
-                </Grid>
-                <Grid item xs={8} sx={{ color: '#ffbd6a' }}>
+                </StatLabel>
+                <StatValue style={{ color: '#ffbd6a' }}>
                   {gold}
-                </Grid>
-                <Grid item xs={4} sx={{ textAlign: 'left', color: '#ff8888' }}>
+                </StatValue>
+              </StatLine>
+              <StatLine>
+                <StatLabel style={{ color: '#ff8888' }}>
                   Fire:
-                </Grid>
-                <Grid item xs={8} sx={{ color: '#ff8888' }}>
+                </StatLabel>
+                <StatValue style={{ color: '#ff8888' }}>
                   {data.stats.fire}
-                </Grid>
-                <Grid item xs={4} sx={{ textAlign: 'left', color: '#8888ff' }}>
+                </StatValue>
+              </StatLine>
+              <StatLine>
+                <StatLabel style={{ color: '#8888ff' }}>
                   Cold:
-                </Grid>
-                <Grid item xs={8} sx={{ color: '#8888ff' }}>
+                </StatLabel>
+                <StatValue style={{ color: '#8888ff' }}>
                   {data.stats.cold}
-                </Grid>
-                <Grid item xs={4} sx={{ textAlign: 'left', color: '#ffff88' }}>
+                </StatValue>
+              </StatLine>
+              <StatLine>
+                <StatLabel style={{ color: '#ffff88' }}>
                   Ligh:
-                </Grid>
-                <Grid item xs={8} sx={{ color: '#ffff88' }}>
+                </StatLabel>
+                <StatValue style={{ color: '#ffff88' }}>
                   {data.stats.lightning}
-                </Grid>
-                <Grid item xs={4} sx={{ textAlign: 'left', color: '#88ff88' }}>
+                </StatValue>
+              </StatLine>
+              <StatLine>
+                <StatLabel style={{ color: '#88ff88' }}>
                   Pois:
-                </Grid>
-                <Grid item xs={8} sx={{ color: '#88ff88' }}>
+                </StatLabel>
+                <StatValue style={{ color: '#88ff88' }}>
                   {data.stats.poison}
-                </Grid>
-              </Grid>
+                </StatValue>
+              </StatLine>
             </Grid>
-            <Grid item xs={3}>
-              <Grid container>
-                <Grid item xs={4} sx={{ textAlign: 'left' }}>
+            <Grid item xs={4}>
+              <StatLine>
+                <StatLabel>
                   Lvl:
-                </Grid>
-                <Grid item xs={8}>
+                </StatLabel>
+                <StatValue>
                   {data.stats.level}
-                </Grid>
-                <Grid item xs={4} sx={{ textAlign: 'left' }}>
+                </StatValue>
+              </StatLine>
+              <StatLine>
+                <StatLabel>
                   Str:
-                </Grid>
-                <Grid item xs={8}>
+                </StatLabel>
+                <StatValue>
                   {data.stats.strength}
-                </Grid>
-                <Grid item xs={4} sx={{ textAlign: 'left' }}>
+                </StatValue>
+              </StatLine>
+              <StatLine>
+                <StatLabel>
                   Dex:
-                </Grid>
-                <Grid item xs={8}>
+                </StatLabel>
+                <StatValue>
                   {data.stats.dexterity}
-                </Grid>
-                <Grid item xs={4} sx={{ textAlign: 'left' }}>
+                </StatValue>
+              </StatLine>
+              <StatLine>
+                <StatLabel>
                   Vit:
-                </Grid>
-                <Grid item xs={8}>
+                </StatLabel>
+                <StatValue>
                   {data.stats.vitality}
-                </Grid>
-                <Grid item xs={4} sx={{ textAlign: 'left' }}>
+                </StatValue>
+              </StatLine>
+              <StatLine>
+                <StatLabel>
                   Ene:
-                </Grid>
-                <Grid item xs={8}>
+                </StatLabel>
+                <StatValue>
                   {data.stats.energy}
-                </Grid>
-              </Grid>
+                </StatValue>
+              </StatLine>
             </Grid>
-            <Grid item xs={3} alignItems={'end'}>
-              <Grid container>
-                <Grid item xs={4} sx={{ textAlign: 'left' }}>
-                  Fhr:
-                </Grid>
-                <Grid item xs={8}>
+            <Grid item xs={4} alignItems={'end'}>
+              <StatLine>
+                <StatLabel>
+                  FHR:
+                </StatLabel>
+                <StatValue>
                   {data.stats.fasterHitRate}
-                </Grid>
-                <Grid item xs={4} sx={{ textAlign: 'left' }}>
-                  Fcr:
-                </Grid>
-                <Grid item xs={8}>
+                </StatValue>
+              </StatLine>
+              <StatLine>
+                <StatLabel>
+                  FCR:
+                </StatLabel>
+                <StatValue>
                   {data.stats.fasterCastRate}
-                </Grid>
-                <Grid item xs={4} sx={{ textAlign: 'left' }}>
-                  Frw:
-                </Grid>
-                <Grid item xs={8}>
+                </StatValue>
+              </StatLine>
+              <StatLine>
+                <StatLabel>
+                  FRW:
+                </StatLabel>
+                <StatValue>
                   {data.stats.fasterRunWalk}
-                </Grid>
-              </Grid>
+                </StatValue>
+              </StatLine>
             </Grid>
           </Grid>
           <div style={{ paddingLeft: 15, paddingTop: 3 }}>
             {runesArr}
           </div>
           <div style={{ paddingLeft: 15, paddingTop: 5, color: '#777', fontSize: 14 }}>
-            {lastUpdate > 5 && <>Odczytane {lastUpdateFmt} temu</>}
-          </div>
-        </div>
-        <div id="timer">
-          <div id="game">
-            <div className="label">Czas gry</div>
-            <div className="time">00:00:00</div>
-          </div>
-          <div id="real">
-            <div className="label">Czas łączny</div>
-            <div className="time">00:00:00</div>
+            {lastUpdate > 5 && <>{t('Odczytane ')}{lastUpdateFmt} {t('temu')}</>}
           </div>
         </div>
       </div>

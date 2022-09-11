@@ -1,6 +1,5 @@
 import { app, BrowserWindow, ipcMain, dialog, shell, session, clipboard } from 'electron';
-import { writeFile } from 'fs';
-import { extname, join } from 'path';
+import { join } from 'path';
 import { IpcMainEvent } from 'electron/renderer';
 import WindowStateKeeper from "electron-window-state";
 import itemsDatabase from './lib/items';
@@ -17,27 +16,29 @@ export const CSP_HEADER =
   "style-src 'unsafe-inline'; " +
   "style-src-elem 'unsafe-inline' http://localhost:*; " +
   "font-src file: http://localhost:*; " +
-  "frame-src file: http://localhost:3666";
+  "connect-src ws: file: http://localhost:*; " +
+  "frame-src file: http://localhost:*";
 
 export let eventToReply: IpcMainEvent | null;
 export function setEventToReply(e: IpcMainEvent) {
   eventToReply = e;
 }
 
-let mainWindow: BrowserWindow | null
+let mainWindow: BrowserWindow | null;
+export let mainWindowReady = false;
 
 const assetsPath =
   process.env.NODE_ENV === 'production'
     ? process.resourcesPath
     : app.getAppPath()
 
-function createWindow () {
+function createWindow() {
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     // eslint-disable-next-line node/no-callback-literal
     callback({
       responseHeaders: {
         ...details.responseHeaders,
-        'Content-Security-Policy': [ CSP_HEADER ]
+        'Content-Security-Policy': [CSP_HEADER]
       }
     })
   })
@@ -77,12 +78,12 @@ function createWindow () {
   setupStreamFeed();
 }
 
-async function closeApp () {
+async function closeApp() {
   itemsDatabase.shutdown();
   app.quit();
 }
 
-async function registerListeners () {
+async function registerListeners() {
   ipcMain.on('readFilesUponStart', (event) => {
     itemsDatabase.readFilesUponStart(event);
   });
@@ -109,6 +110,7 @@ async function registerListeners () {
     eventToReply = event;
     event.returnValue = streamPort;
   });
+  mainWindowReady = true;
 }
 
 app.on('ready', createWindow)

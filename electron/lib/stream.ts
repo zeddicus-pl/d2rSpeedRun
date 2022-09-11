@@ -52,18 +52,6 @@ export async function setupStreamFeed() {
   server.listen(streamPort);
 }
 
-export function updateSettingsToListeners() {
-  streamListeners.forEach((socket) => {
-    socket.emit("updatedSettings", settingsStore.getSettings());
-  })
-}
-
-export function updateDataToListeners() {
-  streamListeners.forEach((socket) => {
-    socket.emit("openFolder", itemsDatabase.getItems());
-  })
-}
-
 const addStreamListener = (socket: Socket): void => {
   streamListeners.set(socket.id, socket);
   socket.emit("updatedSettings", settingsStore.getSettings());
@@ -73,4 +61,18 @@ const addStreamListener = (socket: Socket): void => {
 
 const removeStreamListener = (socket: Socket): void => {
   streamListeners.delete(socket.id);
+}
+
+export function updateSettingsToListeners() {
+  const settings = settingsStore.getSettings();
+  streamListeners.forEach((socket) => {
+    socket.emit("updatedSettings", settings);
+  });
+}
+
+export function updateDataToListeners() {
+  const items = itemsDatabase.getItems();
+  streamListeners.forEach((socket) => {
+    socket.emit("openFolder", items);
+  });
 }
