@@ -3,6 +3,6 @@ plugins:
 - jekyll-remote-theme
 
 title: D2R Speedrun Tool
-description: Application that scans your Diablo 2 Resurrected saves and displays stats about the last updated one.
+description: Application that scans your Diablo 2 Resurrected saves and displays character stats from the last updated one.
 theme: jekyll-theme-cayman
 google_analytics: G-73CHK4Y998
