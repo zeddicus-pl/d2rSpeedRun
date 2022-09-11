@@ -1,7 +1,0 @@
-node_modules
-dist
-packages
-.webpack
-out
-.DS_Store
-yarn-error.log
