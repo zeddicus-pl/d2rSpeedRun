@@ -62,7 +62,7 @@ export default function StreamApp() {
         runesArr.push(<span key={idx}>{runes[idx].name}</span>);
       }
       if (runes[idx].count > 1) {
-        runesArr.push(<span key={idx}><small>{ runes[idx].count }</small>{runes[idx].name}</span>);
+        runesArr.push(<span key={idx}><small>{ runes[idx].count }<span style={{color: '#aaa'}}>x</span></small>{runes[idx].name}</span>);
       }
     });
 
@@ -186,10 +186,10 @@ export default function StreamApp() {
               </StatLine>
             </Grid>
           </Grid>
-          <div style={{ paddingLeft: 15, paddingTop: 3 }}>
+          <div style={{ paddingLeft: 5, paddingTop: 3, textShadow: '0 0 2px black' }}>
             {runesArr}
           </div>
-          <div style={{ paddingLeft: 15, paddingTop: 5, color: '#777', fontSize: 14 }}>
+          <div style={{ paddingLeft: 5, paddingTop: 5, color: '#777', fontSize: 14, textShadow: '0 0 2px black' }}>
             {lastUpdate > 5 && <>{t('Odczytane ')}{lastUpdateFmt} {t('temu')}</>}
           </div>
         </div>

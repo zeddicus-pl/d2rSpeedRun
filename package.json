@@ -16,7 +16,7 @@
   "keywords": [],
   "license": "ISC",
   "dependencies": {
-    "@dschu012/d2s": "^2.0.19",
+    "@dschu012/d2s": "https://github.com/zeddicus-pl/d2s.git",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.10.3",
@@ -41,6 +41,7 @@
     "material-react-toastify": "^1.0.1",
     "node-fetch": "3",
     "node-loader": "^2.0.0",
+    "platform-folders": "^0.6.0",
     "pretty-ms": "^8.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",

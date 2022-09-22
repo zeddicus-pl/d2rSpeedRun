@@ -6,6 +6,7 @@ import { Settings } from '../../@types/main';
 import { toast } from 'material-react-toastify';
 import { Language } from './language';
 import { useTranslation } from 'react-i18next';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 type MainProps = {
   uiState: UiState,
@@ -56,10 +57,19 @@ export function Main({ uiState, settings, localPort, onFileClick }: MainProps) {
                 pauseOnHover: true,
                 draggable: false,
               });
-            }}>http://localhost:{localPort}</a>
+            }}>http://localhost:{localPort} <ContentCopyIcon fontSize='small' /></a>
           </div>
+          <p>
+            {t("Statistics are updated each time the game saves the game, which is:")}
+            <ul>
+              <li>{t("(about) each 5 minutes")}</li>
+              <li>{t("each time an item is identified")}</li>
+              <li>{t("when you quit&save the game")}</li>
+            </ul>
+            {t("Note: statistics from charms are counted in, regardless of their level requirement, to simplify the algorithm")}
+          </p>
           <div>
-            <iframe style={{ width: '80vw', margin: 'auto', height: 400, border: "1px solid #666" }} src="http://localhost:3666" />
+            <iframe style={{ width: '80vw', margin: 'auto', height: 250, border: "1px solid #333" }} src="http://localhost:3666" />
           </div>
         </div>
       }
