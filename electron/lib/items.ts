@@ -10,7 +10,6 @@ import chokidar, { FSWatcher } from 'chokidar';
 import { eventToReply, setEventToReply } from '../main';
 import settingsStore from './settings';
 import { updateDataToListeners } from './stream';
-import getPath from 'platform-folders';
 const { readFile } = promises;
 
 class ItemsStore {
@@ -58,7 +57,6 @@ class ItemsStore {
       title: "Select Diablo 2 / Diablo 2 Resurrected save folder",
       message: "Select Diablo 2 / Diablo 2 Resurrected save folder",
       properties: ['openDirectory'],
-      defaultPath: getPath('savegames'),
     }).then((result) => {
       if (result.filePaths[0]) {
         const path = result.filePaths[0];
@@ -66,14 +64,11 @@ class ItemsStore {
         this.parseSaves(event, path, true);
       } else {
         this.currentData = null;
-        if (this.watchPath === null) {
-          event.reply('noDirectorySelected', null);
-        } else {
-          event.reply('openFolder', null);
-        }
+        event.reply('noDirectorySelected', null);
         updateDataToListeners();
       }
     }).catch((e) => {
+      event.reply('noDirectorySelected', null);
       console.log(e);
     });
   };

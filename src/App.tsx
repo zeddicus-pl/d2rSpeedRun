@@ -1,5 +1,3 @@
-import { GlobalStyle } from './styles/GlobalStyle'
-
 import { Main } from './components/Main'
 
 import { useState, useEffect, MouseEventHandler } from 'react';
@@ -108,7 +106,6 @@ export function App() {
 
   return (
     <>
-      <GlobalStyle />
       <ThemeProvider theme={createTheme({palette: { mode: 'dark' }})}>
         <>
           <Main

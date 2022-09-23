@@ -1,4 +1,4 @@
-import { Container } from './styles'
+import { Container, FolderButton } from './styles'
 import { Typography, Button, FormControlLabel, Switch } from '@mui/material';
 import { UiState } from '../../App';
 import { MouseEventHandler, useState } from 'react';
@@ -23,24 +23,26 @@ export function Main({ uiState, settings, localPort, onFileClick }: MainProps) {
         <Language />
       </div>
       <h1>{t('Speedrun tool')}</h1>
-      { uiState !== UiState.Loading
-        ? <>
-          <Button
-            variant="contained"
-            onClick={onFileClick}
-            disableFocusRipple={uiState !== UiState.Ready}
-            disableRipple={uiState !== UiState.Ready}
-          >
-            { uiState === UiState.Ready && t('Wybierz folder z sejvami') }
-            { uiState === UiState.FileDialog && t('Oczekiwanie na wybranie folderu...') }
-            { uiState === UiState.Reading && t('Odczytywanie plików...') }
-            { uiState === UiState.List && t('Zmień folder') }
-          </Button>
-        </>
-        : <Typography variant="body2">
-          {t('Ładowanie...')}
-        </Typography>
-      }
+      <FolderButton>
+        { uiState !== UiState.Loading
+          ? <>
+            <Button
+              variant="contained"
+              onClick={onFileClick}
+              disableFocusRipple={uiState !== UiState.Ready}
+              disableRipple={uiState !== UiState.Ready}
+            >
+              { uiState === UiState.Ready && t('Wybierz folder z sejvami') }
+              { uiState === UiState.FileDialog && t('Oczekiwanie na wybranie folderu...') }
+              { uiState === UiState.Reading && t('Odczytywanie plików...') }
+              { uiState === UiState.List && t('Zmień folder') }
+            </Button>
+          </>
+          : <Typography variant="body2">
+            {t('Ładowanie...')}
+          </Typography>
+        }
+      </FolderButton>
       { uiState === UiState.List && <div style={{ paddingTop: 20 }}>
           <div style={{ marginBottom: 10 }}>
             {t('Śledzony folder:')}<br />
@@ -69,7 +71,7 @@ export function Main({ uiState, settings, localPort, onFileClick }: MainProps) {
             {t("Note: statistics from charms are counted in, regardless of their level requirement, to simplify the algorithm")}
           </p>
           <div>
-            <iframe style={{ width: '80vw', margin: 'auto', height: 250, border: "1px solid #333" }} src="http://localhost:3666" />
+            <iframe style={{ width: '80vw', margin: 'auto', height: 200, border: "1px solid #333" }} src="http://localhost:3666" />
           </div>
         </div>
       }

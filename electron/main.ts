@@ -14,8 +14,8 @@ export const CSP_HEADER =
   "default-src 'self' 'unsafe-inline' data: ws:; " +
   "script-src 'self' 'unsafe-eval' 'unsafe-inline' data:; " +
   "style-src 'unsafe-inline'; " +
-  "style-src-elem 'unsafe-inline' http://localhost:*; " +
-  "font-src file: http://localhost:*; " +
+  "style-src-elem 'unsafe-inline' http://localhost:* https://fonts.googleapis.com; " +
+  "font-src file: http://localhost:* https://fonts.gstatic.com; " +
   "connect-src ws: file: http://localhost:*; " +
   "frame-src file: http://localhost:*";
 

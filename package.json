@@ -1,7 +1,7 @@
 {
   "name": "d2rspeedrun",
   "author": "Kamil Tunkiewicz <kamil.tunkiewicz(at)gmail.com>",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Scan your Diablo 2 Resurrected saves and displays stats about the last updated one",
   "main": "./.webpack/main",
   "scripts": {
@@ -41,7 +41,6 @@
     "material-react-toastify": "^1.0.1",
     "node-fetch": "3",
     "node-loader": "^2.0.0",
-    "platform-folders": "^0.6.0",
     "pretty-ms": "^8.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
